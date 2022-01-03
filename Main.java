@@ -17,7 +17,6 @@ public class Main {
                 String original = current_file.getName();
                 // Removes the timestamp
                 String new_name = original.replaceAll(" \\((.*?)\\)", "");
-                System.out.println(new_name);
                 // Instantiating & initializing files
                 File oldFile = new File(base_dir + File.separator + original);
                 File newFile = new File(base_dir + File.separator + new_name);
@@ -34,7 +33,10 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        File root = new File("M:\\FileHistory\\ferna\\DESKTOP-3VEGAHM (4)\\Data\\C\\Users\\ferna\\Downloads\\");
+        String base_dir = "<your base directory>";
+
+        // Pass in a base director.
+        File root = new File(base_dir);
         traverse(root);
     }
 }
