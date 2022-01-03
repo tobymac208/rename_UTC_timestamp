@@ -7,50 +7,34 @@
 import java.io.File;
 
 public class Main {
-    public static void traverse(File file) {
-        File[] listOfFiles = null;
-
-        if (file.isDirectory()) {
-            listOfFiles = file.listFiles();
-        }
-
-        for (File current_file : listOfFiles){
+    public static void traverse(File base_dir) {
+        // Create array of current files in this directory. Traverse if not a file.
+        for (File current_file : base_dir.listFiles()){
             // Checks if the current file is actually a directory. If so, be recursive
             if (current_file.isDirectory()) {
                 traverse(current_file);
             } else {
-                String original = current_file.toString();
-                System.out.println(original);
+                String original = current_file.getName();
                 // Removes the timestamp
                 String new_name = original.replaceAll(" \\((.*?)\\)", "");
                 System.out.println(new_name);
-                
                 // Instantiating & initializing files
-                File oldFile = new File(original);
-                File newFile = new File(new_name);
+                File oldFile = new File(base_dir + File.separator + original);
+                File newFile = new File(base_dir + File.separator + new_name);
                 
                 if (oldFile.renameTo(newFile)) {
                     System.out.println("File renamed!");
                 } else {
-                    System.out.println("Booh!");
-                    continue;
+                    if(oldFile.delete()){
+                        System.out.println("Copy deleted!");
+                    }
                 }
             }
         }
     }
 
     public static void main(String[] args) {
-        // String file = "M:\\FileHistory\\ferna\\DESKTOP-3VEGAHM (4)\\Data\\C\\Users\\ferna\\Downloads\\an-example-of-a-healthy-balanced-meal-plan-2506647 (2021_09_18 17_45_57 UTC).pdf";
-        // String newFile = "M:\\FileHistory\\ferna\\DESKTOP-3VEGAHM (4)\\Data\\C\\Users\\ferna\\Downloads\\an-example-of-a-healthy-balanced-meal-plan-2506647.pdf";
-        
-        File file = new File("M:\\FileHistory\\ferna\\DESKTOP-3VEGAHM (4)\\Data\\C\\Users\\ferna\\Downloads\\an-example-of-a-healthy-balanced-meal-plan-2506647 (2021_09_18 17_45_57 UTC).pdf");
-        File newFile = new File("M:\\FileHistory\\ferna\\DESKTOP-3VEGAHM (4)\\Data\\C\\Users\\ferna\\Downloads\\an-example-of-a-healthy-balanced-meal-plan-2506647.pdf");
-
-        if(file.renameTo(newFile)) {
-            System.out.println("TESTTESTSETETESTSET!@#!@#");
-        }
-
-        // File root = new File("M:\\FileHistory\\ferna\\DESKTOP-3VEGAHM (4)\\Data\\C\\Users\\ferna\\Downloads\\");
-        // traverse(root);
+        File root = new File("M:\\FileHistory\\ferna\\DESKTOP-3VEGAHM (4)\\Data\\C\\Users\\ferna\\Downloads\\");
+        traverse(root);
     }
 }
