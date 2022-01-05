@@ -43,9 +43,12 @@ public class Main {
     public static void main(String[] args) {
         /** Example base_dir: "D:\\FileHistory\\ferna\\DESKTOP-3VEGAHM\\Data\\C\\Users\\ferna\\" */
         String base_dir = "<your base directory";
-
+	
         // Pass in a base director.
         File root = new File(base_dir);
-        traverse(root);
+	if(!root.exists())
+	    System.out.println("Needs to be a valid directory.");
+	else
+            traverse(root);
     }
 }
